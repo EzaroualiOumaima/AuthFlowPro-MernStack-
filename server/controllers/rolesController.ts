@@ -1,13 +1,23 @@
+import permissionModel from "../models/permission.schema";
 import roleModel from "../models/roles.schema";
 import { Request, Response } from "express";
 
 const createRole = async (req: Request, res: Response) => {
   try {
-    const response = await roleModel.create(req.body);
+    const {name} = req.body
+    const response = await roleModel.findOne({name});
+   
+    const rolePermission = await permissionModel.find({name : {$in:["GET"]}})
+    const newRole = new roleModel ({
+        name,
+        permissions : rolePermission.map((item) => item._id)
+
+    })
+    await newRole.save();
     res.status(201).json({
-      newData: response,
-      msg: "Role is created",
-    });
+         newRole,
+        msg: "Role is created",
+      });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
