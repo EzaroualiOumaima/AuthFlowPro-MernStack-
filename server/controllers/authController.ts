@@ -22,7 +22,6 @@ const postRegister = async (req: Request, res: Response) => {
     const newUser = await userModel.create({
       name,
       email,
-      password: hachPassword,
       role
     });
     res.status(201).json({

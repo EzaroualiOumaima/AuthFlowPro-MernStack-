@@ -10,10 +10,10 @@ const port = 4000;
 
 
 app.use(express.json());
-app.use("/api" , router);
-app.use("/api" , routerRoles);
-app.use("/api" , routerPermission);
-app.use("/api" , authrouter )
+app.use("/api/users" , router);
+app.use("/api/roles" , routerRoles);
+app.use("/api/permissions" , routerPermission);
+app.use("/auth" , authrouter )
 
 
 app.listen(port , ()=> {

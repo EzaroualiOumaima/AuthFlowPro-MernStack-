@@ -28,6 +28,17 @@ const createPermission = async (req: Request, res: Response) => {
     }
   };
 
+  const deletePermission = async (req: Request, res: Response) => {
+    try {
+      await permissionModel.findByIdAndDelete(req.params.id);
+      res.status(200).json({
+        msg: "Permission deleted successfuly",
+      });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
   export default {
     createPermission,
     updatePermission
