@@ -22,12 +22,17 @@ const postRegister = async (req: Request, res: Response) => {
     const newUser = await userModel.create({
       name,
       email,
+      password: hachPassword,
       role
     });
     res.status(201).json({
       success: true,
       message: "user created successfuly",
-      user: newUser,
+      user: {
+        name,
+        email,
+        role 
+      },
     });
   } catch (error) {
     console.error(error);

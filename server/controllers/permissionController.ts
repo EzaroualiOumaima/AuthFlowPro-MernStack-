@@ -1,5 +1,6 @@
 import permissionModel from "../models/permission.schema";
-import {Request , Response} from 'express'
+import {Request , Response} from 'express';
+
 const createPermission = async (req: Request, res: Response) => {
     try {
       const response = await permissionModel.create(req.body);
@@ -16,7 +17,7 @@ const createPermission = async (req: Request, res: Response) => {
     try {
       const response = await permissionModel.findByIdAndUpdate(
         req.params.id,
-        { $set: req.body },
+        req.body ,
         { new: true }
       );
       res.status(200).json({
@@ -41,5 +42,6 @@ const createPermission = async (req: Request, res: Response) => {
 
   export default {
     createPermission,
-    updatePermission
+    updatePermission,
+    deletePermission
   }

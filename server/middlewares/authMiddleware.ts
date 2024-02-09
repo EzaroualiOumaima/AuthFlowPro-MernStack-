@@ -12,7 +12,7 @@ const verifyToken =  (req:AuthenticatedRequest , res:Response , next: NextFuncti
     }
     console.log(access_token);
     try {
-        const decodedToken = jwt.verify(access_token , process.env.Secret_key as string) as {userId :string};
+        const decodedToken = jwt.verify(access_token , process.env.Secret_key as string) as AuthenticatedRequest;
         // console.log(decodedToken)
         req.userId = decodedToken.userId;
         next();
