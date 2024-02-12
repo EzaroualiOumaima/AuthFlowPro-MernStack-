@@ -3,8 +3,10 @@ import express from "express";
 
 const routerPermission = express.Router();
 
-routerPermission.post("/", permissionController.createPermission);
-routerPermission.put("/:id", permissionController.updatePermission);
+routerPermission.post("/", authMiddleware, permissionController.createPermission);
+routerPermission.put("/:id",authMiddleware, permissionController.updatePermission);
+routerPermission.get("/" , authMiddleware, permissionController.getAllPermissions);
+routerPermission.delete(":/id" , authMiddleware , permissionController.deletePermission)
 
 
 export default routerPermission;
