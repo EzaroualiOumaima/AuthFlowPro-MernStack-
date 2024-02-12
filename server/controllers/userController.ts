@@ -15,7 +15,7 @@ const createUser = async (req: Request, res: Response) => {
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    const response = await userModel.find();
+    const response = await userModel.find().populate({path :"role"});
     res.status(200).json({
       newData: response,
       msg: "All user are fetched",

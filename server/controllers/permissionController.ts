@@ -1,5 +1,6 @@
 import permissionModel from "../models/permission.schema";
 import {Request , Response} from 'express';
+import roleModel  from "../models/roles.schema";
 
 const createPermission = async (req: Request, res: Response) => {
     try {
@@ -39,9 +40,23 @@ const createPermission = async (req: Request, res: Response) => {
       res.status(400).json({ message: error.message });
     }
   };
+  const getAllPermissions = async (req: Request, res: Response) => {
+    try {
+      const response = await permissionModel.find();
+      res.status(200).json({
+        newData: response,
+        msg: "All permissions are fetched",
+      });
+    } catch (error: any) {
+      res.status(400).json({ message: error.message });
+    }
+  };
+
 
   export default {
     createPermission,
     updatePermission,
-    deletePermission
+    deletePermission,
+    getAllPermissions
+    
   }

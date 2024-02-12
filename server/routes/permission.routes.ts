@@ -1,5 +1,6 @@
 import permissionController from "../controllers/permissionController";
 import express from "express";
+import authMiddleware from "../middlewares/authMiddleware";
 
 const routerPermission = express.Router();
 

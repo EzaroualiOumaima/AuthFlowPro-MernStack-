@@ -57,10 +57,13 @@ const postLogin = async (req: Request, res: Response) => {
         if (!passwordMatched) {
             return res.status(401).json({ message: "Authentication failed" });
         }
-        // console.log( process.env.Secret_key as string);
+        console.log( process.env.Secret_key as string);
         
         const token = jwt.sign(
-            { userId: isUserExist._id },
+            { userId: isUserExist._id , 
+            name : isUserExist.name,
+             email : isUserExist.email,
+           role: isUserExist.role },
             process.env.Secret_key as string,
             { expiresIn: "1d" }
             );
@@ -69,7 +72,8 @@ const postLogin = async (req: Request, res: Response) => {
       status: 200,
       success: true,
       message: "login success",
-      token,
+      role: isUserExist.role,
+      token
     });
   } catch (error) {
     res.status(500).json({ message: "Login Failed" });

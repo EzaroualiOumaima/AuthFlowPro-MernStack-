@@ -4,20 +4,18 @@ import { Request, Response } from "express";
 
 const createRole = async (req: Request, res: Response) => {
   try {
-    const {name} = req.body
-    const response = await roleModel.findOne({name});
-   
-    const rolePermission = await permissionModel.find({name : {$in:["GET"]}})
-    const newRole = new roleModel ({
-        name,
-        permissions : rolePermission.map((item) => item._id)
-
-    })
+    const { name , permissions} = req.body;
+    console.log(req.body);
+  
+    const newRole = new roleModel({
+      name,
+      permissions
+    });
     await newRole.save();
     res.status(201).json({
-         newRole,
-        msg: "Role is created",
-      });
+      newRole,
+      msg: "Role is created",
+    });
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
@@ -25,7 +23,7 @@ const createRole = async (req: Request, res: Response) => {
 
 const getRole = async (req: Request, res: Response) => {
   try {
-    const response = await roleModel.find();
+    const response = await roleModel.find().populate({path :"permissions" , select:"name -_id"});
     res.status(200).json({
       newData: response,
       msg: "All roles are fetched",
@@ -81,5 +79,6 @@ export default {
   getRole,
   getRoleById,
   updateRole,
-  deleteRole,
+  deleteRole
+  
 };
