@@ -1,6 +1,5 @@
 import permissionModel from "../models/permission.schema";
 import {Request , Response} from 'express';
-import roleModel  from "../models/roles.schema";
 
 const createPermission = async (req: Request, res: Response) => {
     try {
