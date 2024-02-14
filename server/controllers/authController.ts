@@ -4,7 +4,10 @@ import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import "dotenv/config"
 // Register User
-
+interface CustomUser{
+  name:string
+  permissions:[]
+}
 const postRegister = async (req: Request, res: Response) => {
   try {
     const user = req.body;
@@ -46,7 +49,10 @@ const postLogin = async (req: Request, res: Response) => {
     
     const { email, password } = user;
     // check if the user exist in the database or not
-    const isUserExist = await userModel.findOne({ email });
+    const isUserExist = await userModel.findOne({ email }).populate<{role:CustomUser}>({
+      path :"role",
+      populate :{path : 'permissions'}
+    });
     if (!isUserExist) {
         return res.status(401).json({ message: "Authentication failed" });
     }
@@ -72,8 +78,11 @@ const postLogin = async (req: Request, res: Response) => {
       status: 200,
       success: true,
       message: "login success",
-      role: isUserExist.role,
-      token
+      role: isUserExist.role.name,
+      permissions:isUserExist.role.permissions,
+      token,
+      name :isUserExist.name,
+      email: isUserExist.email
     });
   } catch (error) {
     res.status(500).json({ message: "Login Failed" });

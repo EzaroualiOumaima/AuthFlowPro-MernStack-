@@ -4,11 +4,12 @@ import router  from "./routes/user.routes";
 import routerRoles from "./routes/roles.routes";
 import routerPermission from "./routes/permission.routes";
 import authrouter from "./routes/auth.routes";
+import cors from "cors"
 const app = express();
 const port = 4000;
 
 
-
+app.use(cors())
 app.use(express.json());
 app.use("/api/users" , router);
 app.use("/api/roles" , routerRoles);
