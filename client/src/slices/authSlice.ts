@@ -19,9 +19,6 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await axios.post("http://localhost:4000/auth/login", userCredentials);
       localStorage.setItem('token', res.data.token)
-      // if(res.data.role === 'ADMIN'){
-        
-      // }
       console.log(res);
       return res.data; // Assuming the response contains user data
     } catch (error) {
