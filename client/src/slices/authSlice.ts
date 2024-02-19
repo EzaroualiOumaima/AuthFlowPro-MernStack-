@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+
 interface CustomInitialState {
   loading: boolean;
   user: null  // Change 'null' to 'any' for flexibility in typing
@@ -23,7 +25,7 @@ export const loginUser = createAsyncThunk(
       return res.data; // Assuming the response contains user data
     } catch (error) {
       // Throw error to be handled by the rejected action
-      
+
     }
   }
 );
